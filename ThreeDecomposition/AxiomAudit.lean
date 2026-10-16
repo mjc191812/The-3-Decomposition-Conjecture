@@ -1,0 +1,88 @@
+import ThreeDecomposition
+import ThreeDecomposition.Audit.AxiomCheck
+
+/-!
+# Axiom audit
+
+Built by `lake build`; any failing check fails the build.  The only axiom declared in the
+project is Schönberger's theorem (`exists_perfect_matching_containing_edge`); the four main
+results may use it and nothing else beyond `propext`, `Classical.choice` and `Quot.sound`.
+-/
+
+set_option linter.hashCommand false
+
+namespace ThreeDecomposition
+
+#assert_project_axioms [exists_perfect_matching_containing_edge]
+
+/-! ## Main results -/
+
+#assert_axioms terminalSelectionTheorem allowing [exists_perfect_matching_containing_edge]
+#assert_axioms terminal_selection allowing [exists_perfect_matching_containing_edge]
+#assert_axioms fragileDecompositionTheorem allowing [exists_perfect_matching_containing_edge]
+#assert_axioms multigraphFragileDecomposition allowing [exists_perfect_matching_containing_edge]
+#assert_axioms twoDecompositionConjecture allowing [exists_perfect_matching_containing_edge]
+#assert_axioms threeDecompositionConjecture allowing [exists_perfect_matching_containing_edge]
+
+/-! ## Milestones -/
+
+#assert_axioms twice_targetMatchingSize
+#assert_axioms degree_defect_eq_cyclomatic_sub_two
+#assert_axioms deletedMatching_degree_sub_two_eq_terminal_exposure
+#assert_axioms component_identity
+#assert_axioms connected_isTree_of_cyclomatic_zero
+#assert_axioms component_isResidualCycle_of_degree_two
+#assert_axioms terminal_statement_of_component_decomposition
+#assert_axioms terminal_statement_of_counted_components
+#assert_axioms IsBridgeless.connected_deleteEdges
+
+#assert_axioms ncard_verts_eq_two_mul_ncard_edgeSet
+#assert_axioms ncard_compl_verts_eq_ncard_terminals_sub_two
+#assert_axioms terminal_criterion
+#assert_axioms terminal_criterion_components
+#assert_axioms terminalSelectionStatement_iff_exists_component
+#assert_axioms TerminalSelectionStatement.exists_residual_tree_component
+#assert_axioms terminalSelectionStatement_of_isPerfectMatching
+#assert_axioms terminalSelectionStatement_of_all_but_one_terminal
+
+#assert_axioms first_entry
+#assert_axioms first_entry_reachable
+
+#assert_axioms IsSuppressible.connected_suppress
+#assert_axioms IsSuppressible.isBridgeless_suppress
+#assert_axioms IsSuppressible.is23Graph_suppress
+#assert_axioms IsSuppressible.ncard_terminals_suppress
+#assert_axioms IsSuppressible.cyclomaticNumber_suppress
+#assert_axioms IsReplaceableTriangle.connected_replaceTriangle
+#assert_axioms IsReplaceableTriangle.isBridgeless_replaceTriangle
+#assert_axioms IsReplaceableTriangle.is23Graph_replaceTriangle
+#assert_axioms IsReplaceableTriangle.ncard_terminals_replaceTriangle
+#assert_axioms IsReplaceableTriangle.cyclomaticNumber_replaceTriangle
+#assert_axioms eq_triangle_of_adj_terminals
+#assert_axioms ne_of_adj_terminals
+#assert_axioms isSuppressible_of_adj_terminals
+#assert_axioms ne_of_triangle
+#assert_axioms isReplaceableTriangle_of
+
+#assert_axioms exists_isPerfectMatching_of_ncard_terminals_eq_two
+  allowing [exists_perfect_matching_containing_edge]
+#assert_axioms exists_comparison_matching
+  allowing [exists_perfect_matching_containing_edge]
+
+#assert_axioms adjacentTerminalLift
+#assert_axioms triangleLift
+#assert_axioms restorationLift
+#assert_axioms terminalSelectionStatement_of_first_entry
+#assert_axioms terminalSelectionStatement_of_triangle
+#assert_axioms terminalSelectionTheorem_of_lifts
+  allowing [exists_perfect_matching_containing_edge]
+
+#assert_axioms protectedCycleTheorem
+#assert_axioms connected_deleteEdges_of_isAcyclic
+#assert_axioms hasTreeMatchingDecomposition_of_terminalSelection
+
+#assert_axioms LooplessMultigraph.exists_isSpanningTree_isMatching
+#assert_axioms twoDecompositionConjecture_of_fragileDecomposition
+#assert_axioms threeDecompositionConjecture_of_fragileDecomposition
+
+end ThreeDecomposition

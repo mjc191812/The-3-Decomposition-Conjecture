@@ -1,0 +1,16 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "ThreeDecompositionChallenge.terminal_selection_theorem",
+    "ThreeDecompositionChallenge.fragile_decomposition_theorem",
+    "ThreeDecompositionChallenge.two_decomposition_conjecture",
+    "ThreeDecompositionChallenge.three_decomposition_conjecture"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice",
+    "ThreeDecomposition.exists_perfect_matching_containing_edge"
+  ]
+}

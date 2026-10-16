@@ -1,0 +1,25 @@
+name: Lean Action CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Reject sorry and admit
+        run: |
+          if grep -rnwE --include='*.lean' 'sorry|admit' ThreeDecomposition ThreeDecomposition.lean; then
+            echo "::error::sorry/admit found"
+            exit 1
+          fi
+      # `lake build` also builds ThreeDecomposition/AxiomAudit.lean, which fails
+      # on any undeclared axiom or on `sorryAx` in an audited theorem.
+      - uses: leanprover/lean-action@v1

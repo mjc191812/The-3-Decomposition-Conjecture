@@ -1,0 +1,31 @@
+name = "ThreeDecomposition"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["ThreeDecomposition"]
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+weak.linter.style.header = false
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.34.1"
+
+# `AxiomAudit` is not imported by the root module; the glob is what makes
+# `lake build` run it.
+[[lean_lib]]
+name = "ThreeDecomposition"
+globs = ["ThreeDecomposition.*"]
+
+# Inputs of `Comparator/config.json`; not default targets.
+[[lean_lib]]
+name = "Challenge"
+srcDir = "Comparator"
+
+[[lean_lib]]
+name = "Solution"
+srcDir = "Comparator"

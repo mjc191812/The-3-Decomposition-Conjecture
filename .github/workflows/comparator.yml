@@ -1,0 +1,31 @@
+name: Comparator
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  comparator:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Build landrun
+        run: |
+          go install github.com/zouuup/landrun/cmd/landrun@main
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      # comparator and lean4export are tagged per Lean release; lean4export must read
+      # this project's .olean files, so both are built with the project's toolchain.
+      - name: Build comparator and lean4export
+        run: |
+          git clone --depth 1 --branch v4.34.0 https://github.com/leanprover/comparator "$RUNNER_TEMP/comparator"
+          cp lean-toolchain "$RUNNER_TEMP/comparator/lean-toolchain"
+          (cd "$RUNNER_TEMP/comparator" && lake build comparator lean4export)
+          echo "COMPARATOR_BIN=$RUNNER_TEMP/comparator/.lake/build/bin/comparator" >> "$GITHUB_ENV"
+          echo "COMPARATOR_LEAN4EXPORT=$RUNNER_TEMP/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export" >> "$GITHUB_ENV"
+      - name: Run comparator
+        run: lake env "$COMPARATOR_BIN" Comparator/config.json
